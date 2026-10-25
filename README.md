@@ -14,7 +14,7 @@ Aplicación web interactiva de **ingeniería inversa** para síntesis de circuit
 - **Algoritmo Exhaustivo de Optimización:**
   - Evalúa topologías con 1 componente (valor comercial más próximo).
   - Combinaciones de 2 componentes: Serie ($R_1 + R_2$) y Paralelo ($R_1 \parallel R_2$).
-  - Combinaciones de 3 componentes: Serie pura, Paralelo puro, Mixto Serie-Paralelo ($R_a + (R_b \parallel R_c)$) y Mixto Paralelo-Serie ($R_a \parallel (R_b + R_c)$).
+  - Combinaciones de 3 componentes: Serie pura, Paralelo puro, Mixto Serie-Paralelo ($$R_a + (R_b \parallel R_c)$$) y Mixto Paralelo-Serie ($$R_a \parallel (R_b + R_c)$$).
 - **Catálogos Comerciales Estándar:**
   - **E12 (Tolerancia 10%):** 12 valores nominales por década (carbón/propósito general).
   - **E96 (Tolerancia 1%):** 96 valores nominales por década (película metálica/precisión).
@@ -53,11 +53,11 @@ No requiere dependencias, servidores locales ni empaquetadores como Node.js o We
 
 1. **Clonar el repositorio:**
    ```bash
-   git clone https://github.com/tu-usuario/calculadora-resistores.git
+   git clone https://github.com/jorgeglicona-lang/ResistorCalculator.git
    ```
 2. **Entrar al directorio:**
    ```bash
-   cd calculadora-resistores
+   cd ResistorCalculator
    ```
 3. **Ejecutar:**
    Abre `index.html` con cualquier navegador web moderno (Google Chrome, Firefox, Microsoft Edge, Safari).
