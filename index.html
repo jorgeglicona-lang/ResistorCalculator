@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Resistencias Comerciales (E12 / E96)</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="calculo.js"></script>   
+</head>
+<body>
+
+<div class="container">
+    <button id="themeToggle" class="theme-toggle" aria-label="Cambiar tema" title="Cambiar a Modo Claro">☀️</button>
+    <!-- Header -->
+    <header class="header">
+        <h1>Calculadora de Resistencias Comerciales</h1>
+        <p>Optimización serie, paralelo y mixto para 1, 2 o 3 componentes (Norma EIA)</p>
+    </header>
+
+    <!-- Formulario -->
+    <section class="card">
+        <div class="form-grid">
+            <div class="form-group">
+                <label for="targetVal">Resistencia Deseada:</label>
+                <div class="input-row">
+                    <input type="number" id="targetVal" placeholder="Ej. 1550" step="any" min="0.01">
+                    <select id="unitSelector" style="max-width: 90px;">
+                        <option value="1">Ω</option>
+                        <option value="1000">kΩ</option>
+                        <option value="1000000">MΩ</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="toleranceSelector">Tolerancia del Fabricante:</label>
+                <select id="toleranceSelector">
+                    <option value="10">10% - Serie Comercial E12 (12 val/década)</option>
+                    <option value="1">1% - Serie Comercial E96 (96 val/década)</option>
+                </select>
+            </div>
+
+            <!-- NUEVO: Campo de Voltaje -->
+            <div class="form-group" style="grid-column: 1 / -1;">
+                <label for="voltageVal">Voltaje Aplicado a la Red (Opcional - Para cálculo de Potencia):</label>
+                <div class="input-row">
+                    <input type="number" id="voltageVal" placeholder="Ej. 5 o 12 (V)" step="any" min="0">
+                    <span style="display:flex; align-items:center; padding: 0 10px; background:var(--card-bg); border:1px solid var(--card-border); border-radius:8px; font-weight:bold;">Voltios (V)</span>
+                </div>
+            </div>
+        </div>
+
+        <button class="btn" id="calcBtn" onclick="ejecutarCalculo()">
+            <span id="btnText">Calcular Combinaciones Óptimas</span>
+        </button>
+    </section>
+
+    <!-- Resultados -->
+    <section id="results">
+        <!-- Tarjeta Mejor Global -->
+        <div class="highlight-card">
+            <span class="highlight-badge">Mejor Opción Global</span>
+            <div class="highlight-title">Aproximación Más Cercana Encontrada</div>
+            <div class="highlight-main-val">
+                <span id="globalVal">-</span>
+                <span id="globalErr" class="error-tag">-</span>
+            </div>
+            <div class="highlight-desc" id="globalDesc">-</div>
+
+            <!-- Contenedor Dinámico para el Diagrama -->
+            <div id="diagramContainer" class="diagram-container"></div>
+            
+            <!-- Contenedor de Análisis de Potencia -->
+            <div id="powerAnalysis" class="power-analysis" style="display:none;"></div>
+            
+            <!-- Botón Copiar Reporte -->
+            <button class="copy-report-btn" id="copyReportBtn" style="margin-top: 15px;">📋 Copiar Reporte Lab</button>
+        </div>
+
+        <!-- Comparativa 1, 2 y 3 Resistencias -->
+        <div>
+            <div class="breakdown-title">Comparativa por Número de Resistores</div>
+            <div class="grid-3">
+                <!-- 1 Resistor -->
+                <div class="sub-card" id="card1">
+                    <div class="sub-card-header">
+                        <span class="sub-card-title">1 Resistencia</span>
+                        <span id="err1" class="error-tag">-</span>
+                    </div>
+                    <div class="sub-card-val" id="val1">-</div>
+                    <div class="sub-card-config" id="cfg1">-</div>
+                </div>
+
+                <!-- 2 Resistores -->
+                <div class="sub-card" id="card2">
+                    <div class="sub-card-header">
+                        <span class="sub-card-title">2 Resistencias</span>
+                        <span id="err2" class="error-tag">-</span>
+                    </div>
+                    <div class="sub-card-val" id="val2">-</div>
+                    <div class="sub-card-config" id="cfg2">-</div>
+                </div>
+
+                <!-- 3 Resistores -->
+                <div class="sub-card" id="card3">
+                    <div class="sub-card-header">
+                        <span class="sub-card-title">3 Resistencias</span>
+                        <span id="err3" class="error-tag">-</span>
+                    </div>
+                    <div class="sub-card-val" id="val3">-</div>
+                    <div class="sub-card-config" id="cfg3">-</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botón para mostrar tabla (Oculto por defecto) -->
+        <button id="toggleTableBtn" class="btn-outline" style="display: none; margin-top: 10px;">
+            Ver más opciones (Alternativas)
+        </button>
+
+        <!-- Tabla de Mejores Alternativas (Efecto cascada/acordeón) -->
+        <div id="tableContainer" class="table-accordion">
+            <div class="card" style="margin-top: 0;">
+                <div class="breakdown-title" style="margin-bottom: 6px;">Top Combinaciones Alternativas</div>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 12px;">
+                    Muestra otras formas equivalentes o de mínimo error para que elijas según los componentes que tengas en tu laboratorio.
+                </p>
+                <div class="table-container-scroll">
+                    <table id="altTable">
+                        <thead>
+                            <tr>
+                                <th>Cant.</th>
+                                <th>Topología</th>
+                                <th>Fórmula / Componentes</th>
+                                <th>Valor Total</th>
+                                <th>Error</th>
+                            </tr>
+                        </thead>
+                        <tbody id="altTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- Pantalla de Carga de Resistencia (Overlay) -->
+<div id="loaderOverlay" class="loader-overlay">
+    <div class="resistor-loader">
+        <div class="wire left-wire"></div>
+        <div class="resistor-body">
+            <div class="band band1"></div>
+            <div class="band band2"></div>
+            <div class="band band3"></div>
+            <div class="band band4"></div>
+        </div>
+        <div class="wire right-wire"></div>
+    </div>
+    <div class="loader-text">Calculando combinaciones...</div>
+</div>
+
+<!-- Modal de Colores de Resistencia -->
+<div id="colorModal" class="modal-overlay" style="z-index: 10000; display: none;">
+    <div class="modal-card">
+        <div class="modal-header">
+            <h3 style="margin: 0; color: var(--text-main);">Código de Colores</h3>
+            <button class="close-btn" id="closeModalBtn">&times;</button>
+        </div>
+        <div class="modal-body" id="modalResistorsContainer" style="margin-top: 20px;">
+            <!-- Las resistencias se dibujarán aquí dinámicamente -->
+        </div>
+    </div>
+</div>
+</body>
+</html>

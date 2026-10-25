@@ -1,0 +1,723 @@
+:root {
+    /* Variables por defecto (Modo Oscuro) */
+    --primary: #4f46e5;
+    --primary-hover: #4338ca;
+    --success: #10b981;
+    --warning: #f59e0b;
+    --bg: #0f172a;
+    --card-bg: #1e293b;
+    --card-border: #334155;
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --badge-bg: #312e81;
+    --badge-text: #c7d2fe;
+    --input-bg: #0f172a;
+    --highlight-bg: linear-gradient(135deg, rgba(79, 70, 229, 0.15), rgba(168, 85, 247, 0.1));
+    --subcard-val-color: #ffffff;
+    --subcard-cfg-bg: #0f172a;
+    --subcard-cfg-text: #cbd5e1;
+    --desc-bg: rgba(0, 0, 0, 0.25);
+    --desc-text: #e2e8f0;
+    --table-header: #0f172a;
+    --table-border: rgba(51, 65, 85, 0.6);
+}
+
+body.light-mode {
+    /* Variables para Modo Claro */
+    --bg: #f8fafc;
+    --card-bg: #ffffff;
+    --card-border: #cbd5e1;
+    --text-main: #0f172a;
+    --text-muted: #475569;
+    --badge-bg: #e0e7ff;
+    --badge-text: #3730a3;
+    --input-bg: #ffffff;
+    --highlight-bg: linear-gradient(135deg, rgba(79, 70, 229, 0.05), rgba(168, 85, 247, 0.05));
+    --subcard-val-color: #0f172a;
+    --subcard-cfg-bg: #f1f5f9;
+    --subcard-cfg-text: #334155;
+    --desc-bg: rgba(255, 255, 255, 0.6);
+    --desc-text: #1e293b;
+    --table-header: #f1f5f9;
+    --table-border: #e2e8f0;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text-main);
+    min-height: 100vh;
+    padding: 24px 16px;
+    display: flex;
+    justify-content: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.container {
+    width: 100%;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+}
+
+/* Botón de Modo Claro/Oscuro */
+.theme-toggle {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    color: var(--text-main);
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.theme-toggle:hover {
+    transform: scale(1.1);
+}
+
+/* Encabezado */
+.header {
+    text-align: center;
+    padding: 10px 40px;
+}
+.header h1 {
+    font-size: 1.85rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #818cf8, #c084fc);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 6px;
+}
+.header p {
+    color: var(--text-muted);
+    font-size: 0.95rem;
+}
+
+/* Tarjeta Formulario */
+.card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 640px) {
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+label {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.input-row {
+    display: flex;
+    gap: 8px;
+}
+
+input[type="number"], select {
+    background-color: var(--input-bg);
+    border: 1px solid var(--card-border);
+    color: var(--text-main);
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s, background-color 0.3s, color 0.3s;
+    width: 100%;
+}
+
+input[type="number"]:focus, select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.3);
+}
+
+.btn {
+    background: linear-gradient(135deg, var(--primary), #6366f1);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 14px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    width: 100%;
+    transition: opacity 0.2s, transform 0.1s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.btn:hover {
+    opacity: 0.95;
+    transform: translateY(-1px);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+/* Sección de Resultados */
+#results {
+    display: none;
+    flex-direction: column;
+    gap: 20px;
+}
+
+/* Mejor Opción Global */
+.highlight-card {
+    background: var(--highlight-bg);
+    border: 2px solid #6366f1;
+    border-radius: 16px;
+    padding: 24px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.3s;
+}
+
+.highlight-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: var(--primary);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.highlight-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #818cf8;
+    margin-bottom: 12px;
+}
+
+.highlight-main-val {
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: var(--subcard-val-color);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.error-tag {
+    font-size: 0.95rem;
+    font-weight: 600;
+    padding: 4px 10px;
+    border-radius: 6px;
+}
+
+.error-perfect {
+    background: rgba(16, 185, 129, 0.2);
+    color: #10b981;
+    border: 1px solid rgba(16, 185, 129, 0.4);
+}
+
+.error-good {
+    background: rgba(59, 130, 246, 0.2);
+    color: #3b82f6;
+    border: 1px solid rgba(59, 130, 246, 0.4);
+}
+
+.highlight-desc {
+    font-size: 1.05rem;
+    color: var(--desc-text);
+    margin-top: 10px;
+    padding: 12px 14px;
+    background: var(--desc-bg);
+    border-radius: 8px;
+    border-left: 4px solid var(--primary);
+    transition: background 0.3s, color 0.3s;
+}
+
+/* Comparativa 1, 2, 3 Resistencias */
+.breakdown-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: var(--text-main);
+    margin-bottom: 12px;
+}
+
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px;
+}
+
+.sub-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transition: transform 0.2s, border-color 0.2s, background-color 0.3s;
+}
+
+.sub-card:hover {
+    border-color: #6366f1;
+    transform: translateY(-2px);
+}
+
+.sub-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.sub-card-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #818cf8;
+}
+
+.sub-card-val {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: var(--subcard-val-color);
+}
+
+.sub-card-config {
+    font-size: 0.9rem;
+    color: var(--subcard-cfg-text);
+    background: var(--subcard-cfg-bg);
+    padding: 8px 10px;
+    border-radius: 6px;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    font-family: monospace;
+    transition: background 0.3s, color 0.3s;
+}
+
+/* =========================================
+   ESTILOS DE LA TABLA (RESTAURADOS)
+   ========================================= */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+    text-align: left;
+}
+
+th {
+    background-color: var(--table-header);
+    color: var(--text-muted);
+    padding: 10px 14px;
+    font-weight: 600;
+    border-bottom: 1px solid var(--card-border);
+    transition: background-color 0.3s;
+}
+
+td {
+    padding: 12px 14px;
+    border-bottom: 1px solid var(--table-border);
+    color: var(--text-main);
+    transition: border-color 0.3s, color 0.3s;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+.badge-type {
+    display: inline-block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    padding: 3px 8px;
+    border-radius: 4px;
+    background: #334155;
+    color: #e2e8f0;
+}
+
+/* =========================================
+   PANTALLA DE CARGA (ANIMACIÓN DE RESISTENCIA)
+   ========================================= */
+.loader-overlay {
+    position: fixed;
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    background: rgba(15, 23, 42, 0.85);
+    backdrop-filter: blur(4px);
+    z-index: 9999;
+    display: none; 
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Ajuste del loader para cuando el modo claro está activo debajo */
+body.light-mode .loader-overlay {
+    background: rgba(255, 255, 255, 0.85);
+}
+
+body.light-mode .loader-text {
+    color: #1e293b;
+}
+
+.resistor-loader {
+    display: flex;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+/* Cables (Alambres) */
+.wire {
+    width: 50px; 
+    height: 6px;
+    background: #94a3b8;
+    border-radius: 3px;
+}
+
+/* Cuerpo de la resistencia café */
+.resistor-body {
+    width: 120px; 
+    height: 45px;
+    background: #e6a646; 
+    border-radius: 12px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 0 10px;
+    box-shadow: inset 0 -5px 10px rgba(0,0,0,0.25), 0 5px 15px rgba(0,0,0,0.3);
+    position: relative;
+    z-index: 2;
+}
+
+/* Bandas de colores */
+.band {
+    width: 10px; 
+    height: 52px;
+    border-radius: 5px;
+    animation: saltar 0.6s infinite alternate cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.band1 { background: #ff5100; animation-delay: 0.0s; }
+.band2 { background: #0000ff; animation-delay: 0.1s; }
+.band3 { background: #8b4513; animation-delay: 0.2s; }
+.band4 { background: #ff9900; animation-delay: 0.3s; }
+
+@keyframes saltar {
+    0% { transform: translateY(0); }
+    100% { transform: translateY(-15px); }
+}
+
+.loader-text {
+    color: #c7d2fe;
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+    animation: parpadeo 1s infinite alternate;
+}
+
+@keyframes parpadeo {
+    0% { opacity: 0.6; }
+    100% { opacity: 1; }
+}
+
+/* =========================================
+   TABLA OCULTA (EFECTO ACORDEÓN / DESLIZ)
+   ========================================= */
+.btn-outline {
+    background: transparent;
+    color: var(--text-main);
+    border: 2px solid var(--primary);
+    border-radius: 8px;
+    padding: 10px 16px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: 100%;
+    text-align: center;
+}
+
+.btn-outline:hover {
+    background: rgba(79, 70, 229, 0.1);
+}
+
+.table-accordion {
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease, transform 0.5s ease;
+}
+
+.table-accordion.show {
+    max-height: 600px;
+    opacity: 1;
+    transform: translateY(0);
+    margin-top: 15px;
+}
+
+.table-container-scroll {
+    overflow-x: auto;
+    margin-top: 10px;
+}
+
+/* =========================================
+   MODAL DE CÓDIGO DE COLORES Y HOVER DE TARJETAS
+   ========================================= */
+.sub-card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+.sub-card::after {
+    content: "👀 Ver código de colores";
+    position: absolute;
+    bottom: -35px;
+    left: 0;
+    width: 100%;
+    background: var(--primary);
+    color: white;
+    text-align: center;
+    font-size: 0.85rem;
+    padding: 6px 0;
+    transition: bottom 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-weight: 600;
+}
+
+.sub-card:hover::after {
+    bottom: 0;
+}
+
+.modal-card {
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 16px;
+    width: 90%;
+    max-width: 450px;
+    padding: 24px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+    position: relative;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+/* Este es el fondo transparente que cubre TODA la pantalla */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(15, 23, 42, 0.85); /* Fondo oscuro semitransparente igual que la pantalla de carga */
+    backdrop-filter: blur(4px); /* Desenfoque elegante */
+    z-index: 10000;
+    display: none; /* Oculto por defecto */
+    justify-content: center;
+    align-items: center;
+}
+
+/* Y esto es para que el fondo del modal se adapte cuando active el modo claro (sol) */
+body.light-mode .modal-overlay {
+    background: rgba(255, 255, 255, 0.85);
+}
+
+.modal-overlay.show {
+    display: flex !important;
+}
+
+.modal-overlay.show .modal-card {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--card-border);
+    padding-bottom: 12px;
+}
+
+.close-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    font-size: 1.8rem;
+    cursor: pointer;
+    transition: color 0.2s;
+    line-height: 1;
+}
+
+.close-btn:hover {
+    color: var(--primary);
+}
+
+.modal-resistor-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 24px;
+    background: var(--subcard-cfg-bg);
+    padding: 15px;
+    border-radius: 12px;
+    border: 1px solid var(--card-border);
+}
+
+.modal-resistor-val {
+    font-weight: 800;
+    color: var(--text-main);
+    margin-bottom: 15px;
+    font-size: 1.1rem;
+}
+
+.static-resistor {
+    display: flex;
+    align-items: center;
+}
+
+.static-resistor .resistor-body {
+    background: #e6a646;
+    box-shadow: inset 0 -5px 10px rgba(0,0,0,0.25), 0 5px 15px rgba(0,0,0,0.3);
+    padding: 0 15px;
+}
+
+.static-resistor .band {
+    animation: none !important; /* Desactivar el salto de carga para la vista estática */
+    height: 46px; 
+    margin: 0 3px;
+}
+
+/* Tooltip al pasar el ratón por los colores */
+.band-tooltip {
+    position: relative;
+}
+
+.band-tooltip::before {
+    content: attr(data-color);
+    position: absolute;
+    bottom: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #1e293b;
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    z-index: 10;
+}
+
+.band-tooltip:hover::before {
+    opacity: 1;
+}
+
+/* NUEVO: DIAGRAMA Y POTENCIA */
+.power-analysis { 
+    background: rgba(245,158,11,0.1);
+    border-left: 4px solid var(--warning);
+    padding: 12px; margin-top: 15px;
+    border-radius: 8px; color: var(--text-main);
+    font-size: 0.95rem;
+}
+
+.diagram-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--subcard-cfg-bg);
+    border-radius: 8px;
+    padding: 20px;
+    margin-top: 15px;
+    border: 1px solid var(--card-border);
+    min-height: 80px;
+}
+
+.diag-line {
+    height: 2px;
+    background: var(--primary);
+    width: 30px;
+}
+
+.diag-res {
+    border: 2px solid var(--primary);
+    background: transparent;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.8rem;
+    color: var(--primary);
+    margin: 0 5px;
+}
+
+.diag-parallel {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border-left: 2px solid var(--primary);
+    border-right: 2px solid var(--primary);
+    padding: 0 5px;
+}
+
+.copy-report-btn {
+    background: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--card-border);
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.85rem;
+}
+
+.copy-report-btn:hover {
+    background: var(--card-bg);
+    color: var(--primary);
+    border-color: var(--primary);
+}
